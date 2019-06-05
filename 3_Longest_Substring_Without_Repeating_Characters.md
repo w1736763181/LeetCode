@@ -56,3 +56,28 @@ var lengthOfLongestSubstring = function(s) {
 :--:|:--:|:--:|:--:
 288ms|41MB|O(n²)|O(n)
 
+## 解法二
+用map来优化解法一效率
+### javascript 版
+```
+var lengthOfLongestSubstring = function(s) {
+    var max = 0;
+    var map = new Map();
+    var startIndex = 0;
+    for(var i = 0; i < s.length; i++) {
+        var char = s.charAt(i);
+        if (map.has(char) && map.get(char) >= startIndex) {
+            max = Math.max(i - startIndex, max);
+            startIndex = map.get(char) + 1;
+        } else if (i === s.length - 1) {
+            max = Math.max(i - startIndex + 1, max);
+        }
+        map.set(char, i);
+    }
+    return max;
+};
+```
+时间|内存|时间复杂度|空间复杂度
+:--:|:--:|:--:|:--:
+76ms|37.4MB|O(n)|O(n)
+
